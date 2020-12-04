@@ -57,7 +57,7 @@ router.put('/projects/:id', async (req, res) => {
     
         if(!name || !description) return res.status(400).send(); 
     
-        const changes = { name, description }; 
+        const changes = { name, description, completed: true, id: req.params.id}; 
     
         await db.update(req.params.id, changes); 
     

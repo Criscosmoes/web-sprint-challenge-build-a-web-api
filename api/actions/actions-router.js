@@ -84,7 +84,7 @@ router.put('/actions/:id', async (req, res) => {
 
         if(!action) return res.status(400).send({e: "action does not exist"})
 
-        const changes = { description, notes }; 
+        const changes = { description, notes, completed: true, project_id: req.params.id }; 
 
         await db.update(req.params.id, changes); 
 
