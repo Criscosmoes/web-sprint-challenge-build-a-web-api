@@ -6,6 +6,7 @@ module.exports = {
   insert,
   update,
   remove,
+  getProjectActions
 };
 
 function get(id) {
@@ -44,4 +45,10 @@ function update(id, changes) {
 
 function remove(id) {
   return db('actions').where('id', id).del();
+}
+
+function getProjectActions(projectId) {
+  return db("actions")
+    .where("project_id", projectId)
+    .then(actions => actions.map(action => mappers.actionToBody(action)));
 }

@@ -13,4 +13,12 @@ I need this code, but don't know where, perhaps should make some middleware, don
 Go code!
 */
 
-console.log('this is working'); 
+const server = require('./api/server'); 
+const dotenv = require('dotenv'); 
+dotenv.config(); 
+
+const port = process.env.PORT || 4000; 
+
+
+server.listen(port, () => console.log(`server listening on ${port}`))
+
