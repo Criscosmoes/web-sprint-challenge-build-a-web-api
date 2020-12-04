@@ -36,10 +36,10 @@ router.post('/projects', async (req, res) => {
 
         if(!description || !name) return res.status(400).send(); 
 
-        const newProject = { description, name, completed: false}; 
+        const projectNew = { description, name, completed: true}; 
 
-        const addProject = await db.insert(newProject); 
-        res.send(addProject); 
+        await db.insert(projectNew); 
+        res.status(201).send(projectNew); 
     }
     catch(e){
         res.status(500).send(); 
@@ -50,7 +50,7 @@ router.put('/projects/:id', async (req, res) => {
 
     try {
         if (Object.keys(req.body).length === 0) {
-            return res.status(400); 
+            return res.status(400).send({e: "Please provide updates"})
         }
     
         const { name, description } = req.body; 
@@ -73,9 +73,10 @@ router.put('/projects/:id', async (req, res) => {
 
 router.delete('/projects/:id', async (req, res) => {
     try {
-        const project = db.get(req.params.id); 
+        const project =  await db.get(req.params.id); 
 
         if(!project) return res.status(404); 
+         
         await db.remove(req.params.id); 
         return res.status(200).send(project); 
     }
